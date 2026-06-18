@@ -33,6 +33,7 @@ namespace Infrastructure.Services
                 ConsultantId = u.UserId,
                 FullName = u.FullName,
                 Email = u.Email,
+                Gender = u.Gender,
                 Specialties = u.Specialties.Select(s => new SpecialtyDTO
                 {
                     Id = s.SpecialtyId,
@@ -72,6 +73,7 @@ namespace Infrastructure.Services
                         FullName = c.FullName,
                         Email = c.Email,
                         Avatar = c.Avatar,
+                        Gender = c.Gender,
                         Specialties = c.Specialties.Select(s => new SpecialtyDTO
                         {
                             Id = s.SpecialtyId,
@@ -112,6 +114,7 @@ namespace Infrastructure.Services
                 ConsultantId = u.UserId,
                 FullName = u.FullName,
                 Email = u.Email,
+                Gender = u.Gender,
                 Specialties = specialties.Select(s => new SpecialtyDTO
                 {
                     Id = s.SpecialtyId,

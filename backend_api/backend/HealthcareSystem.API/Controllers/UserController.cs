@@ -48,6 +48,27 @@ public class UserController : ControllerBase
         }
         return Ok(result);
     }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequestDTO dto)
+    {
+        if (dto == null ||
+            string.IsNullOrWhiteSpace(dto.Email) ||
+            string.IsNullOrWhiteSpace(dto.OtpCode) ||
+            string.IsNullOrWhiteSpace(dto.NewPassword))
+        {
+            return BadRequest("Email, OTP code, and new password are required.");
+        }
+
+        var result = await _userService.ResetPasswordByOtp(dto);
+        if (!result)
+        {
+            return BadRequest("OTP is invalid or expired.");
+        }
+
+        return Ok(result);
+    }
+
     [HttpPost("change-password/{userId}")]
     public async Task<IActionResult> ChangePassword(int userId, [FromBody] ChangePasswordRequestDTO dto)
     {
