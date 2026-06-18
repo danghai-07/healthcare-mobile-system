@@ -10,6 +10,14 @@ namespace  Application.DTOs
 
         public string? ServiceName { get; set; }
 
+        public DateOnly? Dob { get; set; }
+
+        public string? Gender { get; set; }
+
+        public string? PhoneNumber { get; set; }
+
+        public string? FullNameOfMember { get; set; }
+
         public string? Result { get; set; }
 
         public DateTime? RecordDate { get; set; }

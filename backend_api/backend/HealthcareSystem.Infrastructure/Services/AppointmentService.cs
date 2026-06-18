@@ -53,7 +53,7 @@ namespace Infrastructure.Services
                 UserId = dto.ConsultantId,
                 Title = "Lịch hẹn mới",
                 Content = $"Bạn có một lịch hẹn mới với {memberName} vào lúc {formattedTime}.",
-                SendTime = DateTime.UtcNow.AddHours(7), // Giờ Việt Nam
+                SendTime = DateTime.UtcNow.AddHours(7),
                 IsRead = false
             };
 
@@ -66,9 +66,37 @@ namespace Infrastructure.Services
                 IsRead = false
             };
 
+            await _context.Notifications.AddRangeAsync(notiForConsultant, notiForMember);
+            await _context.SaveChangesAsync();
+
+            if (!string.IsNullOrWhiteSpace(member?.Email))
+            {
+                try
+                {
+                    await SendAppointmentConfirmationEmailAsync(
+                        member.Email,
+                        member.FullName ?? memberName,
+                        consultantName,
+                        formattedTime);
+                }
+                catch
+                {
+                    // Appointment is already saved; email is best-effort only.
+                }
+            }
+
+            return entity.AppointmentId;
+        }
+
+        private async Task SendAppointmentConfirmationEmailAsync(
+            string toEmail,
+            string memberName,
+            string consultantName,
+            string formattedTime)
+        {
             var email = new MimeMessage();
             email.From.Add(new MailboxAddress("Gender Healthcare System", _config["EmailSettings:From"]));
-            email.To.Add(MailboxAddress.Parse(member.Email));
+            email.To.Add(MailboxAddress.Parse(toEmail));
             email.Subject = "Xác nhận lịch hẹn thành công";
 
             email.Body = new TextPart("html")
@@ -88,7 +116,7 @@ namespace Infrastructure.Services
                 <h2 style='color: #1a73e8; text-align: center; margin-bottom: 20px;'>Đặt lịch thành công</h2>
 
                 <p style='font-size: 15px; color: #333; line-height: 1.6; text-align: center;'>
-                    Xin chào <strong>{member.FullName}</strong>,
+                    Xin chào <strong>{memberName}</strong>,
                     <br />
                     Bạn đã <strong>đặt lịch hẹn thành công</strong> với chuyên gia <strong>{consultantName}</strong> vào lúc <strong>{formattedTime}</strong>.
                 </p>
@@ -116,11 +144,6 @@ namespace Infrastructure.Services
             await smtp.AuthenticateAsync(_config["EmailSettings:Username"], _config["EmailSettings:Password"]);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
-
-            await _context.Notifications.AddRangeAsync(notiForConsultant, notiForMember);
-
-            await _context.SaveChangesAsync();
-            return entity.AppointmentId;
         }
 
         public async Task<IEnumerable<AppointmentListItemDto>> GetAllAppointmentsAsync()

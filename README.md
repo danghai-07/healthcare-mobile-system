@@ -1,84 +1,100 @@
-# healthcare-mobile-system
+# Healthcare Mobile System (CareWell)
 
-Hệ thống chăm sóc sức khỏe gồm **Backend API** (.NET 9) và **Mobile App** (Flutter).
+Hệ thống chăm sóc sức khỏe giới tính gồm **Backend API** (.NET 9) và **Mobile App** (Flutter).
 
-## Yêu cầu
+```
+healthcare-mobile-system/
+├── backend_api/     # ASP.NET Core REST API + SQL Server
+├── mobile_app/      # Flutter app (CareWell)
+└── README.md        # File này
+```
+
+## Tài liệu chi tiết
+
+| Thành phần | README |
+|------------|--------|
+| Backend API | [backend_api/README.md](backend_api/README.md) |
+| Mobile App | [mobile_app/README.md](mobile_app/README.md) |
+
+## Yêu cầu chung
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
-- SQL Server hoặc SQL Server LocalDB
-- [dotnet-ef](https://learn.microsoft.com/en-us/ef/core/cli/dotnet) (công cụ EF Core CLI)
+- SQL Server hoặc LocalDB
+- [Flutter SDK](https://docs.flutter.dev/get-started/install) 3.12+
 
-```powershell
-dotnet tool install --global dotnet-ef
-```
+## Quick start
 
-## Chạy Backend
+### 1. Backend
 
-### 1. Cấu hình môi trường
+**Bước A — Cấu hình:** tạo `backend_api/backend/HealthcareSystem.API/appsettings.Development.json` với `ConnectionStrings:DefaultConnection` (xem [backend_api/README.md](backend_api/README.md)).
 
-Secrets được lưu local tại:
-
-`backend_api/backend/HealthcareSystem.API/appsettings.Development.json`
-
-File này **không được commit** lên Git. Sao chép và điền các giá trị cần thiết:
-
-- `ConnectionStrings:DefaultConnection` — chuỗi kết nối SQL Server
-- `Jwt:Secret`
-- `Authentication:Google` — nếu dùng Google Login
-- `PayPal`, `EmailSettings` — nếu dùng thanh toán / gửi email
-
-**Ví dụ connection string (LocalDB):**
-
-```text
-Server=(localdb)\MSSQLLocalDB;Database=HealthcareSystemDb;Trusted_Connection=True;TrustServerCertificate=True;
-```
-
-**Ví dụ connection string (SQL Server Express):**
-
-```text
-Server=localhost;Database=HealthcareSystemDb;User Id=SA;Password=YOUR_PASSWORD;TrustServerCertificate=True;
-```
-
-### 2. Tạo database
-
-Chạy migration từ thư mục Infrastructure:
+**Bước B — Tạo schema (bảng, không có dữ liệu):**
 
 ```powershell
 cd backend_api/backend/HealthcareSystem.Infrastructure
 dotnet ef database update --startup-project ..\HealthcareSystem.API
 ```
 
-Hoặc import dữ liệu mẫu bằng script SQL:
+**Bước C — Nạp dữ liệu mẫu (chỉ 1 file SQL):**
 
-`backend_api/docs/HealthcareSystemDb.sql`
-
-### 3. Chạy API
+Chạy `backend_api/docs/HealthcareSystemDb.sql` bằng SSMS, Azure Data Studio, hoặc:
 
 ```powershell
-cd backend_api/backend/HealthcareSystem.API
-dotnet restore
+sqlcmd -S "(localdb)\MSSQLLocalDB" -d HealthcareSystemDb -i "backend_api\docs\HealthcareSystemDb.sql"
+```
+
+**Bước D — Chạy API:**
+
+```powershell
+cd ..\HealthcareSystem.API
 dotnet run
 ```
 
-Hoặc mở solution `backend_api/HealthcareSystem.sln` trong Visual Studio và nhấn **F5**.
+API: **http://localhost:5011** · Swagger: **http://localhost:5011/swagger**
 
-### 4. Kiểm tra
-
-| Môi trường | URL |
-| HTTP       | http://localhost:5011 |
-| HTTPS      | https://localhost:7165 |
-| Swagger UI | https://localhost:7165/swagger |
-
-Nếu trình duyệt báo lỗi chứng chỉ HTTPS, chạy:
+### 2. Mobile
 
 ```powershell
-dotnet dev-certs https --trust
+cd mobile_app
+flutter pub get
+flutter run -d chrome
 ```
+
+> Android emulator dùng `http://10.0.2.2:5011` — sửa `defaultBaseUrl` trong `mobile_app/lib/core/constants/app_constants.dart`.
+
+## Tính năng hệ thống (tóm tắt)
+
+| Module | Backend | Mobile |
+|--------|---------|--------|
+| Đăng nhập / đăng ký / OTP | ✅ | ✅ |
+| Quên mật khẩu | ✅ | ✅ |
+| Tư vấn viên & đặt lịch | ✅ | ✅ |
+| Xét nghiệm & kết quả | ✅ | ✅ |
+| Bài viết sức khỏe | ✅ | ✅ |
+| Hồ sơ & đổi mật khẩu | ✅ | ✅ |
+| Hỏi đáp cộng đồng | ✅ | 🔜 |
+| Chu kỳ sinh sản | ✅ | 🔜 |
+| Thông báo | ✅ | 🔜 |
+| Thanh toán PayPal | ✅ | 🔜 |
+| Google Sign-In | ✅ | 🔜 (API sẵn, chưa UI) |
+
+Chi tiết tính năng mobile và roadmap: [mobile_app/README.md](mobile_app/README.md).
+
+## Cấu hình secrets
+
+File `backend_api/backend/HealthcareSystem.API/appsettings.Development.json` **không được commit**. Cần điền:
+
+- `ConnectionStrings:DefaultConnection`
+- `Jwt:Secret`
+- `EmailSettings` (OTP, email xác nhận)
+- `Authentication:Google` (tùy chọn)
+- `PayPal` (tùy chọn)
 
 ## Xử lý lỗi thường gặp
 
 | Lỗi | Cách xử lý |
-|---|---|
-| `Unable to retrieve project metadata` | Chạy `dotnet ef` từ đúng thư mục `HealthcareSystem.Infrastructure` và dùng `--startup-project ..\HealthcareSystem.API` |
-| `ConnectionString property has not been initialized` | Điền connection string trong `appsettings.Development.json` |
-| Không kết nối được SQL Server | Kiểm tra SQL Server đang chạy và connection string đúng loại (LocalDB vs Express) |
+|-----|------------|
+| Mobile không gọi được API | Backend đang chạy? Đúng base URL theo platform? |
+| `ConnectionString not initialized` | Tạo `appsettings.Development.json` |
+| EF migration lỗi | Chạy từ `HealthcareSystem.Infrastructure` với `--startup-project` |
+| HTTPS certificate | `dotnet dev-certs https --trust` |

@@ -42,7 +42,7 @@ namespace Infrastructure.Services
                     existingUser.CreateDate = DateOnly.FromDateTime(DateTime.Now.AddHours(7));
                     existingUser.Provider = "Local";
                     existingUser.RoleId = "MB";
-                    existingUser.IsAvailable = false;
+                    existingUser.IsAvailable = true;
 
                     try
                     {
@@ -70,7 +70,7 @@ namespace Infrastructure.Services
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
                 Provider = "Local",
                 RoleId = "MB",
-                IsAvailable = false,
+                IsAvailable = true,
                 CreateDate = DateOnly.FromDateTime(DateTime.Now.AddHours(7))
             };
 
