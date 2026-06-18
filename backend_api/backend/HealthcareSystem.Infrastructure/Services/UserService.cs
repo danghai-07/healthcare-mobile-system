@@ -83,7 +83,45 @@ namespace Infrastructure.Services
 
             _context.Users.Update(user);
             return await _context.SaveChangesAsync() > 0;
+        }
 
+        public async Task<bool> ResetPasswordByOtp(ResetPasswordRequestDTO dto)
+        {
+            if (dto == null ||
+                string.IsNullOrWhiteSpace(dto.Email) ||
+                string.IsNullOrWhiteSpace(dto.OtpCode) ||
+                string.IsNullOrWhiteSpace(dto.NewPassword))
+            {
+                return false;
+            }
+
+            var otpRequest = await _context.OtpRequests
+                .FirstOrDefaultAsync(o =>
+                    o.Email == dto.Email &&
+                    o.Code == dto.OtpCode &&
+                    o.IsVerified == 0);
+
+            if (otpRequest == null ||
+                otpRequest.ExpiredAt < DateTime.UtcNow.AddHours(7))
+            {
+                return false;
+            }
+
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.Email == dto.Email);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.NewPassword);
+            otpRequest.IsVerified = 1;
+            user.IsAvailable = true;
+
+            _context.Users.Update(user);
+            _context.OtpRequests.Update(otpRequest);
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> ChangePassword(int userId, ChangePasswordRequestDTO dto)

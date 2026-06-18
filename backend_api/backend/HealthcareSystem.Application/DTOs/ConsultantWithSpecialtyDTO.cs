@@ -6,6 +6,7 @@ namespace Application.DTOs
         public int ConsultantId { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
+        public string? Gender { get; set; }
         public List<SpecialtyDTO> Specialties { get; set; }
         public List<FreeSlotDTO> FreeSlots { get; set; } = new();
     }

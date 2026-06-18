@@ -29,15 +29,27 @@ namespace Infrastructure.Services
         {
             return await _context.TestServiceRecords
                 .Include(r => r.Service)
+                .Include(r => r.Staff)
                 .Where(r => r.MemberId == MemberId)
+                .OrderByDescending(r => r.TestDate)
+                .ThenByDescending(r => r.RecordDate)
                 .Select(r => new TestServiceRecordDTO
                 {
                     TestServiceRecordId = r.TestServiceRecordId,
                     ServiceId = r.ServiceId,
                     ServiceName = r.Service.Name,
+                    Dob = r.Dob,
+                    Gender = r.Gender,
+                    PhoneNumber = r.PhoneNumber,
+                    FullNameOfMember = r.FullNameOfMember,
                     MemberId = r.MemberId,
+                    Result = r.Result,
                     StaffId = r.StaffId,
+                    StaffName = r.Staff != null ? r.Staff.FullName : null,
                     RecordDate = r.RecordDate,
+                    TestDate = r.TestDate,
+                    TimeSlot = r.TimeSlot,
+                    Notes = r.Notes,
                     Status = r.Status
                 })
                 .ToListAsync();
@@ -54,6 +66,10 @@ namespace Infrastructure.Services
                     r.ServiceId,
                     ServiceName = r.Service.Name,
                     r.MemberId,
+                    r.Dob,
+                    r.Gender,
+                    r.PhoneNumber,
+                    r.FullNameOfMember,
                     r.Result,
                     r.RecordDate,
                     r.Notes,
@@ -86,6 +102,10 @@ namespace Infrastructure.Services
                 TestServiceRecordId = record.TestServiceRecordId,
                 ServiceId = record.ServiceId,
                 ServiceName = record.ServiceName,
+                Dob = record.Dob,
+                Gender = record.Gender,
+                PhoneNumber = record.PhoneNumber,
+                FullNameOfMember = record.FullNameOfMember,
                 Result = record.Result,
                 RecordDate = record.RecordDate,
                 Notes = record.Notes,
