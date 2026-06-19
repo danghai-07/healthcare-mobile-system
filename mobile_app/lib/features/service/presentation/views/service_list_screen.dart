@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../core/constants/route_paths.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/empty_state_widget.dart';
@@ -13,6 +14,7 @@ import '../../../../routes/route_names.dart';
 import '../presenters/service_presenter.dart';
 import '../presenters/service_view_status.dart';
 import '../widgets/service_card.dart';
+import '../widgets/service_catalog_header.dart';
 
 /// Medical test service catalog.
 class ServiceListScreen extends StatefulWidget {
@@ -43,24 +45,35 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverPadding(
-                  padding: AppSpacing.screenPadding,
+                  padding: AppSpacing.screenPadding.copyWith(bottom: 0),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      const SectionHeader(
-                        title: 'Dịch vụ xét nghiệm',
-                        subtitle: 'Chọn dịch vụ và đặt lịch xét nghiệm.',
+                      const ServiceCatalogHeader(),
+                      const SizedBox(height: AppSpacing.xxl),
+                      SectionHeader(
+                        title: 'Gói xét nghiệm',
+                        subtitle: presenter.listStatus ==
+                                ServiceViewStatus.success
+                            ? '${presenter.services.length} dịch vụ có sẵn'
+                            : 'Chọn gói phù hợp với nhu cầu của bạn',
+                        accentTitle: true,
                         responsive: false,
+                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                        actionLabel: 'Lịch sử',
+                        actionIcon: Icons.history_rounded,
+                        onAction: () => context.go(
+                          '${RoutePaths.appointments}?tab=testRecords',
+                        ),
                       ),
                       AppSearchBar(
                         hint: 'Tìm dịch vụ xét nghiệm...',
                         onChanged: presenter.setSearchQuery,
                         responsive: false,
                       ),
-                      const SizedBox(height: AppSpacing.lg),
                     ]),
                   ),
                 ),
-                _buildBodySliver(presenter),
+                _buildBodySliver(context, presenter),
               ],
             ),
           ),
@@ -69,7 +82,10 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
     );
   }
 
-  Widget _buildBodySliver(ServicePresenter presenter) {
+  Widget _buildBodySliver(
+    BuildContext context,
+    ServicePresenter presenter,
+  ) {
     return switch (presenter.listStatus) {
       ServiceViewStatus.loading || ServiceViewStatus.idle =>
         SliverFillRemaining(
@@ -103,13 +119,19 @@ class _ServiceListScreenState extends State<ServiceListScreen> {
           ),
         ),
       ServiceViewStatus.success => SliverPadding(
-          padding: AppSpacing.screenPadding.copyWith(top: 0),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.sm,
+            AppSpacing.lg,
+            AppSpacing.xxl,
+          ),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final service = presenter.services[index];
                 return ServiceCard(
                   service: service,
+                  index: index,
                   onTap: () => context.pushNamed(
                     RouteNames.medicalTestDetail,
                     pathParameters: {

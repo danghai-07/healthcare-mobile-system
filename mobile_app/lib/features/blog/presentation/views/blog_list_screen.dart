@@ -14,6 +14,7 @@ import '../../../../routes/route_names.dart';
 import '../presenters/blog_presenter.dart';
 import '../presenters/blog_view_status.dart';
 import '../widgets/blog_card.dart';
+import '../widgets/blog_catalog_header.dart';
 
 /// Health blog catalog powered by `GET /api/blogs`.
 class BlogListScreen extends StatefulWidget {
@@ -44,28 +45,32 @@ class _BlogListScreenState extends State<BlogListScreen> {
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
                 SliverPadding(
-                  padding: AppSpacing.screenPadding,
+                  padding: AppSpacing.screenPadding.copyWith(bottom: 0),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      const SectionHeader(
-                        title: 'Bài viết sức khỏe',
-                        subtitle:
-                            'Kiến thức và mẹo chăm sóc sức khỏe giới tính.',
+                      const BlogCatalogHeader(),
+                      const SizedBox(height: AppSpacing.xxl),
+                      SectionHeader(
+                        title: 'Danh sách bài viết',
+                        subtitle: presenter.listStatus == BlogViewStatus.success
+                            ? '${presenter.blogs.length} bài viết'
+                            : 'Tìm kiếm theo chủ đề hoặc từ khóa',
+                        accentTitle: true,
                         responsive: false,
+                        padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                       ),
                       AppSearchBar(
                         hint: 'Tìm bài viết...',
                         onChanged: presenter.setSearchQuery,
                         responsive: false,
                       ),
-                      const SizedBox(height: AppSpacing.lg),
+                      const SizedBox(height: AppSpacing.md),
                       if (presenter.topics.isNotEmpty)
                         TopicFilterChipBar(
                           topics: presenter.topics,
                           selected: presenter.selectedTopic,
                           onChanged: presenter.setTopicFilter,
                         ),
-                      const SizedBox(height: AppSpacing.lg),
                     ]),
                   ),
                 ),
@@ -113,7 +118,12 @@ class _BlogListScreenState extends State<BlogListScreen> {
           ),
         ),
       BlogViewStatus.success => SliverPadding(
-          padding: AppSpacing.screenPadding.copyWith(top: 0),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.sm,
+            AppSpacing.lg,
+            AppSpacing.xxl,
+          ),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
@@ -121,6 +131,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                 final blogId = blog.blogId;
                 return BlogCard(
                   blog: blog,
+                  index: index,
                   onTap: blogId == null
                       ? () {}
                       : () => context.pushNamed(

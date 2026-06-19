@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/accent_content_block.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/error_widget.dart';
@@ -158,20 +159,16 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
           ),
           if (blog.description != null && blog.description!.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xxl),
-            AppCard(
-              backgroundColor: AppColors.primaryMuted,
-              borderColor: AppColors.primaryLight,
-              child: Text(
-                blog.description!,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      height: 1.55,
-                      color: AppColors.textSecondary,
-                    ),
-              ),
+            AccentContentBlock(
+              child: Text(blog.description!),
             ),
           ],
           const SizedBox(height: AppSpacing.xxl),
-          const SectionHeader(title: 'Nội dung', responsive: false),
+          const SectionHeader(
+            title: 'Nội dung',
+            accentTitle: true,
+            responsive: false,
+          ),
           AppCard(
             child: Text(
               blog.content,
@@ -182,7 +179,11 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
           ),
           if (blog.images.length > 1) ...[
             const SizedBox(height: AppSpacing.xxl),
-            const SectionHeader(title: 'Hình ảnh', responsive: false),
+            const SectionHeader(
+              title: 'Hình ảnh',
+              accentTitle: true,
+              responsive: false,
+            ),
             ...blog.images.skip(1).map(
                   (image) => Padding(
                     padding: const EdgeInsets.only(bottom: AppSpacing.lg),

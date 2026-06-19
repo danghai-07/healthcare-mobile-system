@@ -48,11 +48,11 @@ class BookingConfirmScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const SoftIconBadge(
-              icon: Icons.check_circle_outline_rounded,
+              icon: Icons.check_circle_rounded,
               size: 72,
-              iconSize: 36,
-              backgroundColor: AppColors.successLight,
-              iconColor: AppColors.success,
+              iconSize: 40,
+              backgroundColor: AppColors.primaryMuted,
+              iconColor: AppColors.primary,
             ),
             const SizedBox(height: AppSpacing.xxl),
             Text(

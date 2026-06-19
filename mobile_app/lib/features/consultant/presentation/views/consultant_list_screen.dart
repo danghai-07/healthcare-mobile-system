@@ -14,6 +14,7 @@ import '../../domain/entities/specialty.dart';
 import '../presenters/consultant_presenter.dart';
 import '../presenters/consultant_view_status.dart';
 import '../widgets/consultant_card.dart';
+import '../widgets/consultant_catalog_header.dart';
 
 /// Horizontal specialty filter chips for the consultant list.
 class SpecialtyFilterBar extends StatelessWidget {
@@ -135,13 +136,20 @@ class _ConsultantListScreenState extends State<ConsultantListScreen> {
             physics: const AlwaysScrollableScrollPhysics(),
             slivers: [
               SliverPadding(
-                padding: AppSpacing.screenPadding,
+                padding: AppSpacing.screenPadding.copyWith(bottom: 0),
                 sliver: SliverList(
                   delegate: SliverChildListDelegate([
-                    const SectionHeader(
-                      title: 'Tư vấn viên',
-                      subtitle: 'Tìm chuyên gia phù hợp với nhu cầu của bạn.',
+                    const ConsultantCatalogHeader(),
+                    const SizedBox(height: AppSpacing.xxl),
+                    SectionHeader(
+                      title: 'Danh sách tư vấn viên',
+                      subtitle: presenter.listStatus ==
+                              ConsultantViewStatus.success
+                          ? '${presenter.consultants.length} chuyên gia'
+                          : 'Tìm và đặt lịch với chuyên gia phù hợp',
+                      accentTitle: true,
                       responsive: false,
+                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
                     ),
                     AppSearchBar(
                       hint: 'Tìm theo tên, email, chuyên khoa...',
@@ -163,7 +171,6 @@ class _ConsultantListScreenState extends State<ConsultantListScreen> {
                       onPickDate: () => _pickFilterDate(presenter),
                       onClearFilters: presenter.clearFilters,
                     ),
-                    const SizedBox(height: AppSpacing.lg),
                   ]),
                 ),
               ),
@@ -213,13 +220,19 @@ class _ConsultantListScreenState extends State<ConsultantListScreen> {
           ),
         ),
       ConsultantViewStatus.success => SliverPadding(
-          padding: AppSpacing.screenPadding.copyWith(top: 0),
+          padding: EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.sm,
+            AppSpacing.lg,
+            AppSpacing.xxl,
+          ),
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 final consultant = presenter.consultants[index];
                 return ConsultantCard(
                   consultant: consultant,
+                  index: index,
                   onTap: () => _openDetail(context, consultant.consultantId),
                 );
               },
@@ -265,12 +278,30 @@ class _FilterToolbar extends StatelessWidget {
             horizontal: AppSpacing.lg,
             vertical: AppSpacing.sm,
           ),
+          backgroundColor: AppColors.primaryMuted,
+          borderColor: AppColors.primaryLight,
           child: Row(
             children: [
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: AppColors.primaryLight,
+                  borderRadius: BorderRadius.circular(AppRadius.sm),
+                ),
+                child: const Icon(
+                  Icons.event_available_outlined,
+                  size: 18,
+                  color: AppColors.primary,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Text(
                   'Chỉ hiện có lịch trống',
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
                 ),
               ),
               Switch.adaptive(

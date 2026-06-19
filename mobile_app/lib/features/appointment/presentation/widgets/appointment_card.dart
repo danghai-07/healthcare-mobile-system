@@ -59,56 +59,116 @@ class AppointmentCard extends StatelessWidget {
     super.key,
     required this.appointment,
     required this.onTap,
+    this.index = 0,
   });
 
   final Appointment appointment;
   final VoidCallback onTap;
+  final int index;
+
+  static const _headerTints = [
+    AppColors.primaryMuted,
+    AppColors.primaryLight,
+    Color(0xFFE0F2F1),
+  ];
 
   @override
   Widget build(BuildContext context) {
+    final headerTint = _headerTints[index % _headerTints.length];
+    final start = appointment.startTime;
+
     return AppCard(
       onTap: onTap,
       showShadow: true,
       margin: const EdgeInsets.only(bottom: AppSpacing.md),
+      padding: EdgeInsets.zero,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              DoctorAvatar(
-                name: appointment.consultantName ?? 'Tư vấn viên',
-                radius: 20,
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            decoration: BoxDecoration(
+              color: headerTint,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(AppRadius.lg),
               ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Text(
-                  appointment.consultantName ?? 'Tư vấn viên',
-                  style: Theme.of(context).textTheme.titleMedium,
+            ),
+            child: Row(
+              children: [
+                _DateBadge(date: start),
+                const SizedBox(width: AppSpacing.md),
+                DoctorAvatar(
+                  name: appointment.consultantName ?? 'Tư vấn viên',
+                  radius: 22,
                 ),
-              ),
-              AppointmentStatusBadge(status: appointment.status),
-            ],
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        appointment.consultantName ?? 'Tư vấn viên',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: AppSpacing.xxs),
+                      Text(
+                        '${_formatTime(start)} – ${_formatTime(appointment.endTime)}',
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              color: AppColors.textSecondary,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                AppointmentStatusBadge(status: appointment.status),
+              ],
+            ),
           ),
-          const SizedBox(height: AppSpacing.md),
-          _InfoRow(
-            icon: Icons.calendar_today_outlined,
-            text: _formatDateTime(appointment.startTime),
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          _InfoRow(
-            icon: Icons.schedule_outlined,
-            text:
-                '${_formatTime(appointment.startTime)} – ${_formatTime(appointment.endTime)}',
+          Padding(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.lg,
+            ),
+            child: Row(
+              children: [
+                const Icon(
+                  Icons.video_call_outlined,
+                  size: 16,
+                  color: AppColors.primary,
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    'Buổi tư vấn trực tuyến',
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: AppColors.textSecondary,
+                        ),
+                  ),
+                ),
+                Text(
+                  'Chi tiết',
+                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                ),
+                const Icon(
+                  Icons.arrow_forward_rounded,
+                  size: 18,
+                  color: AppColors.primary,
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
-  }
-
-  static String _formatDateTime(DateTime dateTime) {
-    final day = dateTime.day.toString().padLeft(2, '0');
-    final month = dateTime.month.toString().padLeft(2, '0');
-    return '$day/$month/${dateTime.year}';
   }
 
   static String _formatTime(DateTime dateTime) {
@@ -118,30 +178,43 @@ class AppointmentCard extends StatelessWidget {
   }
 }
 
-class _InfoRow extends StatelessWidget {
-  const _InfoRow({
-    required this.icon,
-    required this.text,
-  });
+class _DateBadge extends StatelessWidget {
+  const _DateBadge({required this.date});
 
-  final IconData icon;
-  final String text;
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 16, color: AppColors.textTertiary),
-        const SizedBox(width: AppSpacing.sm),
-        Expanded(
-          child: Text(
-            text,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.textSecondary,
+    return Container(
+      width: 48,
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.sm,
+        horizontal: AppSpacing.xs,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+      ),
+      child: Column(
+        children: [
+          Text(
+            date.day.toString().padLeft(2, '0'),
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  height: 1,
                 ),
           ),
-        ),
-      ],
+          Text(
+            'T${date.month}',
+            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Colors.white.withValues(alpha: 0.9),
+                  fontSize: 10,
+                  fontWeight: FontWeight.w600,
+                ),
+          ),
+        ],
+      ),
     );
   }
 }

@@ -92,6 +92,7 @@ class _ConsultantDetailScreenState extends State<ConsultantDetailScreen> {
           if (detail.specialties.isNotEmpty) ...[
             const SectionHeader(
               title: 'Chuyên khoa',
+              accentTitle: true,
               responsive: false,
             ),
             Wrap(
@@ -118,6 +119,7 @@ class _ConsultantDetailScreenState extends State<ConsultantDetailScreen> {
             const SectionHeader(
               title: 'Lịch làm việc',
               subtitle: 'Khung giờ tư vấn trong tuần.',
+              accentTitle: true,
               responsive: false,
             ),
             AppCard(
@@ -182,34 +184,37 @@ class _ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppCard(
-      showShadow: true,
-      child: Row(
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(AppSpacing.xxl),
+      decoration: BoxDecoration(
+        color: AppColors.primary,
+        borderRadius: AppRadius.card,
+      ),
+      child: Column(
         children: [
           DoctorAvatar(
             avatarUrl: detail.avatar,
             gender: detail.gender,
             name: detail.fullName,
-            radius: 36,
+            radius: 44,
           ),
-          const SizedBox(width: AppSpacing.lg),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  detail.fullName,
-                  style: Theme.of(context).textTheme.titleLarge,
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            detail.fullName,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
                 ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  detail.email,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppColors.textSecondary,
-                      ),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            detail.email,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Colors.white.withValues(alpha: 0.9),
                 ),
-              ],
-            ),
+            textAlign: TextAlign.center,
           ),
         ],
       ),

@@ -82,6 +82,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                     title: 'Bảo mật tài khoản',
                     subtitle:
                         'Nhập mật khẩu hiện tại và mật khẩu mới của bạn.',
+                    accentTitle: true,
                     responsive: false,
                   ),
                   if (presenter.errorMessage != null) ...[

@@ -15,7 +15,7 @@ class SplashView extends StatelessWidget {
       body: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
-          color: AppColors.background,
+          color: AppColors.primaryMuted,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -31,10 +31,13 @@ class SplashView extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.huge),
-            const SizedBox(
+            SizedBox(
               width: 28,
               height: 28,
-              child: CircularProgressIndicator(strokeWidth: 2.5),
+              child: CircularProgressIndicator(
+                strokeWidth: 2.5,
+                color: AppColors.primary,
+              ),
             ),
           ],
         ),

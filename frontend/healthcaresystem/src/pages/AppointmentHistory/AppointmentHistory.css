@@ -1,0 +1,113 @@
+.appointment-history {
+  max-width: 100%;
+  margin: 20px auto;
+  width: 100%;
+}
+
+.appointment-history .ant-card {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  background: #fff;
+}
+
+.appointment-history .ant-card-body {
+  padding: 24px !important;
+}
+
+.appointment-history .ant-tabs-tab {
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.appointment-history .ant-tabs-tab-active {
+  color: #1a3e72 !important;
+}
+
+.appointment-history .ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.appointment-history .ant-table-thead > tr > th {
+  background-color: #e6f0ff;
+  color: #1a3e72;
+  font-weight: 600;
+  text-align: center;
+}
+
+.appointment-history .ant-table-tbody > tr > td {
+  text-align: center;
+}
+
+.appointment-history .ant-spin {
+  margin: 40px auto;
+  display: block;
+}
+
+.booking-button {
+  width: 160px;
+  height: 36px;
+  background-color: #00CBA7;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 24px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.appointment-pagination {
+  display: flex;
+  justify-content: center !important;
+  margin: 20px 0 !important;
+}
+
+.appointment-pagination .ant-pagination-item {
+  border: none;
+  background-color: #dbe5f1;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.appointment-pagination .ant-pagination-item-active {
+  background-color: #43AA8B;
+}
+
+.appointment-pagination .ant-pagination-item-active a {
+  color: white;
+}
+
+.appointment-pagination .ant-pagination-item-active a:hover {
+  color: white;
+}
+
+.appointment-pagination .ant-pagination-prev .ant-pagination-item-link,
+.appointment-pagination .ant-pagination-next .ant-pagination-item-link {
+  background-color: #dbe5f1;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  color: black;
+}
+
+.appointment-pagination .ant-pagination-item:not(.ant-pagination-item-active):hover {
+  background-color: #c6daf3;
+  border-radius: 50%;
+}
+
+.appointment-pagination .ant-pagination-prev .ant-pagination-item-link:hover,
+.appointment-pagination .ant-pagination-next .ant-pagination-item-link:hover {
+  background-color: #c6daf3;
+  border-radius: 50%;
+}
+
+.appointment-pagination .ant-pagination-disabled {
+  opacity: 0.5;
+}
