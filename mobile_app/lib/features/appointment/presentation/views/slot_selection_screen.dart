@@ -156,6 +156,7 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
           ],
           const SectionHeader(
             title: 'Chọn ngày',
+            accentTitle: true,
             responsive: false,
           ),
           OutlinedButton.icon(
@@ -167,6 +168,7 @@ class _SlotSelectionScreenState extends State<SlotSelectionScreen> {
           const SectionHeader(
             title: 'Khung giờ trống',
             subtitle: 'Mỗi buổi tư vấn kéo dài 30 phút.',
+            accentTitle: true,
             responsive: false,
           ),
           _SlotGrid(presenter: presenter),

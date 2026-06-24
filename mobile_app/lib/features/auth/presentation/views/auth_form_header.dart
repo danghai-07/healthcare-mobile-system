@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/brand_logo.dart';
 
-/// Shared header for auth screens — logo, title, and optional subtitle.
+/// Shared header for auth screens — logo, app name, title, and optional subtitle.
 class AuthFormHeader extends StatelessWidget {
   const AuthFormHeader({
     super.key,

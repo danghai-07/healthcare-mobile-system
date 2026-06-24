@@ -3,14 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'app_colors.dart';
 
-/// Typography system — Inter, tuned for clarity and calm readability.
+/// Typography system — Roboto (aligned with web FE), tuned for mobile readability.
 ///
 /// Scale follows Material 3 with tighter display tracking (Linear / Stripe).
 abstract final class AppTextStyles {
-  static String get _fontFamily => GoogleFonts.inter().fontFamily!;
+  static String get _fontFamily => GoogleFonts.roboto().fontFamily!;
 
   // ─── Display (marketing / hero) ────────────────────────────────────────
-  static TextStyle get displayLarge => GoogleFonts.inter(
+  static TextStyle get displayLarge => GoogleFonts.roboto(
         fontSize: 34,
         fontWeight: FontWeight.w700,
         height: 1.15,
@@ -18,7 +18,7 @@ abstract final class AppTextStyles {
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get displayMedium => GoogleFonts.inter(
+  static TextStyle get displayMedium => GoogleFonts.roboto(
         fontSize: 28,
         fontWeight: FontWeight.w700,
         height: 1.2,
@@ -26,7 +26,7 @@ abstract final class AppTextStyles {
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get displaySmall => GoogleFonts.inter(
+  static TextStyle get displaySmall => GoogleFonts.roboto(
         fontSize: 24,
         fontWeight: FontWeight.w600,
         height: 1.25,
@@ -35,7 +35,7 @@ abstract final class AppTextStyles {
       );
 
   // ─── Headline (screen titles) ──────────────────────────────────────────
-  static TextStyle get headlineLarge => GoogleFonts.inter(
+  static TextStyle get headlineLarge => GoogleFonts.roboto(
         fontSize: 22,
         fontWeight: FontWeight.w600,
         height: 1.3,
@@ -43,7 +43,7 @@ abstract final class AppTextStyles {
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get headlineMedium => GoogleFonts.inter(
+  static TextStyle get headlineMedium => GoogleFonts.roboto(
         fontSize: 20,
         fontWeight: FontWeight.w600,
         height: 1.35,
@@ -51,7 +51,7 @@ abstract final class AppTextStyles {
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get headlineSmall => GoogleFonts.inter(
+  static TextStyle get headlineSmall => GoogleFonts.roboto(
         fontSize: 18,
         fontWeight: FontWeight.w600,
         height: 1.4,
@@ -59,21 +59,21 @@ abstract final class AppTextStyles {
       );
 
   // ─── Title (cards, sections) ───────────────────────────────────────────
-  static TextStyle get titleLarge => GoogleFonts.inter(
+  static TextStyle get titleLarge => GoogleFonts.roboto(
         fontSize: 17,
         fontWeight: FontWeight.w600,
         height: 1.4,
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get titleMedium => GoogleFonts.inter(
+  static TextStyle get titleMedium => GoogleFonts.roboto(
         fontSize: 15,
         fontWeight: FontWeight.w600,
         height: 1.45,
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get titleSmall => GoogleFonts.inter(
+  static TextStyle get titleSmall => GoogleFonts.roboto(
         fontSize: 14,
         fontWeight: FontWeight.w600,
         height: 1.45,
@@ -81,21 +81,21 @@ abstract final class AppTextStyles {
       );
 
   // ─── Body (content) ────────────────────────────────────────────────────
-  static TextStyle get bodyLarge => GoogleFonts.inter(
+  static TextStyle get bodyLarge => GoogleFonts.roboto(
         fontSize: 16,
         fontWeight: FontWeight.w400,
         height: 1.55,
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get bodyMedium => GoogleFonts.inter(
+  static TextStyle get bodyMedium => GoogleFonts.roboto(
         fontSize: 14,
         fontWeight: FontWeight.w400,
         height: 1.5,
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get bodySmall => GoogleFonts.inter(
+  static TextStyle get bodySmall => GoogleFonts.roboto(
         fontSize: 13,
         fontWeight: FontWeight.w400,
         height: 1.45,
@@ -103,7 +103,7 @@ abstract final class AppTextStyles {
       );
 
   // ─── Label (UI chrome) ─────────────────────────────────────────────────
-  static TextStyle get labelLarge => GoogleFonts.inter(
+  static TextStyle get labelLarge => GoogleFonts.roboto(
         fontSize: 14,
         fontWeight: FontWeight.w500,
         height: 1.4,
@@ -111,7 +111,7 @@ abstract final class AppTextStyles {
         color: AppColors.textPrimary,
       );
 
-  static TextStyle get labelMedium => GoogleFonts.inter(
+  static TextStyle get labelMedium => GoogleFonts.roboto(
         fontSize: 12,
         fontWeight: FontWeight.w500,
         height: 1.35,
@@ -119,7 +119,7 @@ abstract final class AppTextStyles {
         color: AppColors.textSecondary,
       );
 
-  static TextStyle get labelSmall => GoogleFonts.inter(
+  static TextStyle get labelSmall => GoogleFonts.roboto(
         fontSize: 11,
         fontWeight: FontWeight.w500,
         height: 1.3,
@@ -128,21 +128,21 @@ abstract final class AppTextStyles {
       );
 
   // ─── Utility ───────────────────────────────────────────────────────────
-  static TextStyle get button => GoogleFonts.inter(
+  static TextStyle get button => GoogleFonts.roboto(
         fontSize: 15,
         fontWeight: FontWeight.w600,
         height: 1.2,
         letterSpacing: 0.1,
       );
 
-  static TextStyle get caption => GoogleFonts.inter(
+  static TextStyle get caption => GoogleFonts.roboto(
         fontSize: 12,
         fontWeight: FontWeight.w400,
         height: 1.4,
         color: AppColors.textTertiary,
       );
 
-  static TextStyle get overline => GoogleFonts.inter(
+  static TextStyle get overline => GoogleFonts.roboto(
         fontSize: 11,
         fontWeight: FontWeight.w600,
         height: 1.3,

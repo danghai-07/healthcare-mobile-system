@@ -120,7 +120,11 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
             ),
           ),
           const SizedBox(height: AppSpacing.xxl),
-          const SectionHeader(title: 'Thông tin lịch hẹn', responsive: false),
+          const SectionHeader(
+            title: 'Thông tin lịch hẹn',
+            accentTitle: true,
+            responsive: false,
+          ),
           AppCard(
             child: Column(
               children: [
@@ -152,6 +156,7 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
             const SizedBox(height: AppSpacing.xxl),
             const SectionHeader(
               title: 'Thông tin thành viên',
+              accentTitle: true,
               responsive: false,
             ),
             AppCard(
@@ -165,7 +170,11 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
           if (detail.symptoms != null &&
               detail.symptoms!.trim().isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xxl),
-            const SectionHeader(title: 'Triệu chứng', responsive: false),
+            const SectionHeader(
+              title: 'Triệu chứng',
+              accentTitle: true,
+              responsive: false,
+            ),
             AppCard(
               child: Text(
                 detail.symptoms!,
@@ -177,7 +186,11 @@ class _AppointmentDetailScreenState extends State<AppointmentDetailScreen> {
           ],
           if (detail.meetLink != null && detail.meetLink!.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xxl),
-            const SectionHeader(title: 'Link tư vấn', responsive: false),
+            const SectionHeader(
+              title: 'Link tư vấn',
+              accentTitle: true,
+              responsive: false,
+            ),
             AppCard(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

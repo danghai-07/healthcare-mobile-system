@@ -144,6 +144,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
           const SizedBox(height: AppSpacing.xxl),
           const SectionHeader(
             title: 'Thông tin bệnh nhân',
+            accentTitle: true,
             responsive: false,
           ),
           AppTextField(
@@ -214,6 +215,7 @@ class _BookServiceScreenState extends State<BookServiceScreen> {
           const SizedBox(height: AppSpacing.xxl),
           const SectionHeader(
             title: 'Lịch xét nghiệm',
+            accentTitle: true,
             responsive: false,
           ),
           OutlinedButton.icon(

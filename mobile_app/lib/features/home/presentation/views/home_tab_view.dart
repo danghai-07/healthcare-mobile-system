@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/route_paths.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/app_card.dart';
 import '../../../../core/widgets/app_scaffold.dart';
 import '../../../../core/widgets/brand_logo.dart';
 import '../../../../core/widgets/feature_tile.dart';
+import '../../../../core/widgets/home_process_section.dart';
 import '../../../../core/widgets/home_banner.dart';
 import '../../../../core/widgets/section_header.dart';
 
@@ -34,6 +36,7 @@ class HomeTabView extends StatelessWidget {
             const SectionHeader(
               title: 'Dịch vụ của bạn',
               subtitle: 'Mọi thứ bạn cần, trong tầm tay',
+              accentTitle: true,
             ),
             FeatureTile(
               title: 'Đặt lịch tư vấn',
@@ -56,7 +59,42 @@ class HomeTabView extends StatelessWidget {
               onTap: () => context.go(RoutePaths.medicalTests),
             ),
             const SizedBox(height: AppSpacing.xxl),
-            const SectionHeader(title: 'Gợi ý hôm nay'),
+            const HomeProcessSection(),
+            const SizedBox(height: AppSpacing.xxl),
+            const SectionHeader(
+              title: 'Bảo mật thông tin',
+              subtitle: 'Dữ liệu sức khỏe được bảo vệ nghiêm ngặt',
+              accentTitle: true,
+            ),
+            AppCard(
+              showShadow: true,
+              child: Row(
+                children: [
+                  Image.asset(
+                    AppAssets.secury,
+                    width: 64,
+                    height: 64,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(width: AppSpacing.lg),
+                  Expanded(
+                    child: Text(
+                      'Mọi thông tin xét nghiệm và tư vấn được mã hóa, '
+                      'chỉ bạn và bác sĩ phụ trách có quyền truy cập.',
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: AppColors.textSecondary,
+                            height: 1.5,
+                          ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xxl),
+            const SectionHeader(
+              title: 'Gợi ý hôm nay',
+              accentTitle: true,
+            ),
             AppCard(
               showShadow: true,
               backgroundColor: AppColors.primaryMuted,

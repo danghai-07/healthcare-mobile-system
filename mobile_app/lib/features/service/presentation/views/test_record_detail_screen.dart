@@ -158,6 +158,7 @@ class _TestRecordDetailScreenState extends State<TestRecordDetailScreen> {
           const SizedBox(height: AppSpacing.xxl),
           const SectionHeader(
             title: 'Thông tin lịch xét nghiệm',
+            accentTitle: true,
             responsive: false,
           ),
           AppCard(
@@ -194,6 +195,7 @@ class _TestRecordDetailScreenState extends State<TestRecordDetailScreen> {
             const SizedBox(height: AppSpacing.xxl),
             const SectionHeader(
               title: 'Thông tin bệnh nhân',
+              accentTitle: true,
               responsive: false,
             ),
             AppCard(
@@ -241,6 +243,7 @@ class _TestRecordDetailScreenState extends State<TestRecordDetailScreen> {
             const SizedBox(height: AppSpacing.xxl),
             const SectionHeader(
               title: 'Nhân viên phụ trách',
+              accentTitle: true,
               responsive: false,
             ),
             AppCard(
@@ -253,7 +256,11 @@ class _TestRecordDetailScreenState extends State<TestRecordDetailScreen> {
           ],
           if (record.result != null && record.result!.trim().isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xxl),
-            const SectionHeader(title: 'Kết quả', responsive: false),
+            const SectionHeader(
+              title: 'Kết quả',
+              accentTitle: true,
+              responsive: false,
+            ),
             AppCard(
               backgroundColor: AppColors.successLight,
               borderColor: AppColors.success.withValues(alpha: 0.3),
@@ -267,7 +274,11 @@ class _TestRecordDetailScreenState extends State<TestRecordDetailScreen> {
           ],
           if (record.notes != null && record.notes!.trim().isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xxl),
-            const SectionHeader(title: 'Ghi chú', responsive: false),
+            const SectionHeader(
+              title: 'Ghi chú',
+              accentTitle: true,
+              responsive: false,
+            ),
             AppCard(child: Text(record.notes!)),
           ],
           if (canCancel) ...[

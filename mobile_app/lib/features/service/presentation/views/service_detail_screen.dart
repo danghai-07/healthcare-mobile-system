@@ -125,6 +125,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
             const SizedBox(height: AppSpacing.xxl),
             const SectionHeader(
               title: 'Mô tả dịch vụ',
+              accentTitle: true,
               responsive: false,
             ),
             AppCard(

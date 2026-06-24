@@ -46,7 +46,10 @@ class LoadingWidget extends StatelessWidget {
       LoadingWidgetMode.inline => SizedBox(
           width: size,
           height: size,
-          child: const CircularProgressIndicator(strokeWidth: 2.5),
+          child: CircularProgressIndicator(
+            strokeWidth: 2.5,
+            color: AppColors.primary,
+          ),
         ),
       LoadingWidgetMode.page => Center(child: _LoadingBody(message: message)),
       LoadingWidgetMode.overlay => ColoredBox(
@@ -73,10 +76,13 @@ class _LoadingBody extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const SizedBox(
+          SizedBox(
             width: 32,
             height: 32,
-            child: CircularProgressIndicator(strokeWidth: 2.5),
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              color: AppColors.primary,
+            ),
           ),
           if (message != null) ...[
             const SizedBox(height: AppSpacing.lg),

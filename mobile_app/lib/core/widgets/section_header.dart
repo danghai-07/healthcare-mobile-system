@@ -14,6 +14,7 @@ class SectionHeader extends StatelessWidget {
     this.actionIcon,
     this.padding,
     this.responsive = true,
+    this.accentTitle = false,
   });
 
   final String title;
@@ -23,6 +24,7 @@ class SectionHeader extends StatelessWidget {
   final IconData? actionIcon;
   final EdgeInsetsGeometry? padding;
   final bool responsive;
+  final bool accentTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +39,11 @@ class SectionHeader extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: accentTitle ? AppColors.primary : null,
+                        fontWeight:
+                            accentTitle ? FontWeight.w700 : FontWeight.w600,
+                      ),
                 ),
                 if (subtitle != null) ...[
                   const SizedBox(height: AppSpacing.xs),

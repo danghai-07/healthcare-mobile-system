@@ -48,16 +48,17 @@ class BrandLogo extends StatelessWidget {
           clipBehavior: Clip.antiAlias,
           child: Image.asset(
             AppAssets.logo,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ),
         if (showWordmark) ...[
           const SizedBox(height: AppSpacing.md),
           Text(
-            'Chăm sóc',
+            'CareWell',
             style: titleStyle.copyWith(
               color: AppColors.primary,
               fontWeight: FontWeight.w700,
+              letterSpacing: 0.5,
             ),
           ),
           const SizedBox(height: AppSpacing.xxs),
@@ -65,7 +66,7 @@ class BrandLogo extends StatelessWidget {
             'Sức khỏe Giới tính',
             style: subtitleStyle.copyWith(
               color: AppColors.primaryDark,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],

@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 ///
 /// Calm, trustworthy palette inspired by modern health & productivity apps.
 abstract final class AppColors {
-  // ─── Brand ───────────────────────────────────────────────────────────────
-  static const Color primary = Color(0xFF54AA7F);
-  static const Color primaryDark = Color(0xFF3F8E66);
-  static const Color primaryLight = Color(0xFFDDF3E8);
+  // ─── Brand (teal from CareWell logo) ─────────────────────────────────────
+  static const Color primary = Color(0xFF009688);
+  static const Color primaryDark = Color(0xFF00796B);
+  static const Color primaryLight = Color(0xFFB2DFDB);
 
   /// Soft brand tint for hero sections and highlighted surfaces.
-  static const Color primaryMuted = Color(0xFFE8F6EF);
+  static const Color primaryMuted = Color(0xFFE0F2F1);
 
   /// Hover / pressed state for primary actions.
-  static const Color primaryHover = Color(0xFF489972);
+  static const Color primaryHover = Color(0xFF00897B);
 
   // ─── Semantic ────────────────────────────────────────────────────────────
   static const Color success = Color(0xFF2E8B57);
@@ -44,7 +44,7 @@ abstract final class AppColors {
   static const Color border = Color(0xFFE5E7EB);
   static const Color borderStrong = Color(0xFFD1D5DB);
   static const Color divider = Color(0xFFE5E7EB);
-  static const Color focusRing = Color(0xFF54AA7F);
+  static const Color focusRing = Color(0xFF009688);
 
   // ─── Accent (complementary calm tone) ───────────────────────────────────
   static const Color secondary = Color(0xFF5B7C99);
@@ -53,7 +53,7 @@ abstract final class AppColors {
   // ─── Overlays ───────────────────────────────────────────────────────────
   static const Color scrim = Color(0x991F2937);
   static const Color shadow = Color(0xFF1F2937);
-  static const Color shadowBrand = Color(0xFF54AA7F);
+  static const Color shadowBrand = Color(0xFF009688);
 
   // ─── Legacy aliases (Material on-colors) ─────────────────────────────────
   static const Color onPrimary = textOnPrimary;

@@ -11,8 +11,9 @@ import '../../../../core/widgets/error_widget.dart';
 import '../../../../core/widgets/loading_widget.dart';
 import '../../../../core/widgets/primary_button.dart';
 import '../../../../core/widgets/secondary_button.dart';
+import '../../../../core/widgets/profile_hero.dart';
 import '../../../../core/widgets/section_header.dart';
-import '../../../../core/widgets/soft_icon_badge.dart';
+import '../widgets/profile_quick_actions.dart';
 import '../presenters/profile_presenter.dart';
 import '../presenters/profile_view_status.dart';
 
@@ -164,57 +165,63 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final profile = presenter.profile;
 
     return SingleChildScrollView(
-      padding: AppSpacing.screenPadding,
       keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          AppCard(
-            showShadow: true,
-            child: Row(
+          ProfileHero(
+            name: profile?.fullName ?? 'Thành viên',
+            email: profile?.email,
+            gender: profile?.gender,
+            avatarUrl: profile?.avatar,
+          ),
+          Padding(
+            padding: AppSpacing.screenPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SoftIconBadge(
-                  icon: Icons.person_rounded,
-                  size: 56,
-                  iconSize: 28,
-                ),
-                const SizedBox(width: AppSpacing.lg),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        profile?.fullName ?? 'Thành viên',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        profile?.email ?? '',
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: AppColors.textSecondary,
-                            ),
-                      ),
-                      if (profile?.roleId != null) ...[
-                        const SizedBox(height: AppSpacing.sm),
+                const ProfileQuickActions(),
+                const SizedBox(height: AppSpacing.lg),
+                if (profile?.roleId != null) ...[
+                  AppCard(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
+                    ),
+                    backgroundColor: AppColors.primaryMuted,
+                    borderColor: AppColors.primaryLight,
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.badge_outlined,
+                          color: AppColors.primary,
+                          size: 20,
+                        ),
+                        const SizedBox(width: AppSpacing.sm),
                         Text(
                           'Vai trò: ${profile!.roleId}',
-                          style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                                color: AppColors.primaryDark,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.labelMedium?.copyWith(
+                                    color: AppColors.primaryDark,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                         ),
                       ],
-                    ],
+                    ),
                   ),
+                  const SizedBox(height: AppSpacing.lg),
+                ],
+                const SectionHeader(
+                  title: 'Thông tin cá nhân',
+                  subtitle: 'Cập nhật thông tin liên hệ của bạn.',
+                  accentTitle: true,
+                  responsive: false,
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(height: AppSpacing.xxl),
-          const SectionHeader(
-            title: 'Thông tin cá nhân',
-            subtitle: 'Cập nhật thông tin liên hệ của bạn.',
-            responsive: false,
-          ),
+                AppCard(
+                  showShadow: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
           AppTextField(
             controller: _fullNameController,
             label: 'Họ và tên',
@@ -286,6 +293,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onChanged: presenter.setAddress,
             responsive: false,
           ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                AppCard(
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  backgroundColor: AppColors.primaryMuted,
+                  borderColor: AppColors.primaryLight,
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.shield_outlined,
+                        color: AppColors.primary,
+                      ),
+                      const SizedBox(width: AppSpacing.md),
+                      Expanded(
+                        child: Text(
+                          'Thông tin cá nhân được bảo mật và chỉ dùng '
+                          'cho mục đích chăm sóc sức khỏe.',
+                          style:
+                              Theme.of(context).textTheme.bodySmall?.copyWith(
+                                    color: AppColors.textSecondary,
+                                    height: 1.45,
+                                  ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
           if (presenter.errorMessage != null) ...[
             const SizedBox(height: AppSpacing.lg),
             AppErrorWidget(
@@ -318,6 +354,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 presenter.isSaving ? null : () => _logout(presenter),
           ),
           const SizedBox(height: AppSpacing.lg),
+              ],
+            ),
+          ),
         ],
       ),
     );
